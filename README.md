@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 SDN SVC streaming framework.
 ===================
 
@@ -6,3 +7,7 @@ I modified the streamer and receiver to let SVC streaming send packets on 3 UDP 
 
   [1]: http://csie.nqu.edu.tw/smallko/sdn/myEvalSVC-Mininet.htm
 
+=======
+# SDN-SVC-Streaming-framework
+Experimantal framework for SVC streaming in SDN
+>>>>>>> origin/master
