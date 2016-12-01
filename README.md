@@ -43,31 +43,36 @@ The basic work flow of this SDN SVC streaming testing framework is to encoded th
 ```
 ./H264AVCEncoderLibTestStatic -pf temproal_main.cfg > temporal_encoding.txt
 ```
+![Alt text](/docs/images/image002.jpg)
+
 
 ###4. Decode the temporal.264 record the decoding process into temporal_originaldecoderoutput.txt. We need some information from it.
 ```
 ./H264AVCDecoderLibTestStatic temporal.264 temporal.yuv > temporal_originaldecoderoutput.txt
 ```
+![Alt text](/docs/images/image003.jpg)
 
 ###5. Use the JSVM BitStreamExtractor to generate the original NALU trace file (temporal_originaltrace.txt)
 ```
 ./BitStreamExtractorStatic -pt temporal_originaltrace.txt temporal.264
 ```
+![Alt text](/docs/images/image006.jpg)
 
 ###6.   Use f-nstamp to add the frame-number in temporal_originaltrace.txt. (It will generate temporal_originaltrace-frameno.txt)
 ```
 mytools/svef-1.5/f-nstamp temporal_originaldecoderoutput.txt temporal_originaltrace.txt > temporal_originaltrace-frameno.txt
 ```
+![Alt text](/docs/images/image007.jpg)
 
-###7.  Setup the network topology and create h1 as the server and h2 as the client.
+###7.  Setup the network topology using Mininet and create h1 as the server and h2 as the client.
 
-###8. On the client termianl
+###8. On the client termianl (h2)
 ```
 sudo ./receiver 4455 myout.264 15000 > myreceivedtrace.txt
 ```
 
 
-###9. On the server terminal.
+###9. On the server terminal. (h1)
 ```
 sudo ./streamer temporal_originaltrace-frameno.txt 30 10.0.0.2 4455 temporal.264 1 > mysent.txt
 ```
