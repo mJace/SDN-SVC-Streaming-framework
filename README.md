@@ -69,6 +69,7 @@ mytools/svef-1.5/f-nstamp temporal_originaldecoderoutput.txt temporal_originaltr
 ![Alt text](/docs/images/image007.jpg)
 
 ### 7.  Setup the network topology using Mininet and create h1 as the server and h2 as the client.
+The topology may be vary to each one's experimental requirement. you have to create your own one.
 
 ### 8. On the client termianl (h2)
 ```
@@ -80,3 +81,35 @@ sudo ./receiver 4455 myout.264 15000 > myreceivedtrace.txt
 ```
 sudo ./streamer temporal_originaltrace-frameno.txt 30 10.0.0.2 4455 temporal.264 1 > mysent.txt
 ```
+
+### 10. Once the streamming finished, let nalufilter discard the late frames and disordered frames.
+```
+mytools/svef-1.5/nalufilter temporal_originaltrace-feno.txt myreceivedtrace.txt 5000 30 > filteredtrace.txt
+```
+![Alt text](/docs/images/image014.jpg)
+
+### 11. The current version of JSVM cannot decode video streams affected by out of order, corrupted, or missing NALUs. Therefore, SVEF uses filtered packet trace file to extract the corresponding packets in original h.264 video file by means of BitStreamExtractorStatic. (You can think that processed video file corresponds to the actually useful data received at the receiving side.)
+```
+./BitStreamExtractorStatic temporal.264 temporal-filtered.264 -et filteredtrace.txt
+```
+![Alt text](/docs/images/image018.jpg)  
+Result...  
+![Alt text](/docs/images/image020.jpg)
+
+### 12. Decode the temporal-filtered.264 into yuv file.
+```
+./H264AVCDecoderLibTestStatic temporal-filtered.264 temoral-filtered.yuv
+```
+![Alt text](/docs/images/image026.jpg)
+
+### 13. We need the same number of video frames when we want to calculate the PSNR of original YUV and receiving YUV file. So we need to conceal the missing frames by copying the previous frame.
+```
+./myfixyuv filteredtrace.txt cif 300 temporal-filtered.yuv myfix.yuv
+```
+![Alt text](/docs/images/image027.jpg)
+
+### 14. Now we can compute the PSNR
+```
+./PSNRStatic 352 288 foreman_cif.yuv myfix.yuv > result_psnr
+```
+![Alt text](/docs/images/image029.jpg)
