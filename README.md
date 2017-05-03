@@ -6,13 +6,17 @@ I modified the streamer and receiver to let SVC streaming send packets on 3 UDP 
 The basic work flow of this SDN SVC streaming testing framework is to encoded the video into a 3-layer h264-svc video. Then, stream this SVC via 3 UDP ports to client in mininet environment. After the streaming finished, decode the h264-svc back to yuv and compare with source yuv video by PSNR value.
 
 ## Requirement
-1. JSVM installed.
-2. SVEF-Mod installed.  based on Scalable Video-streaming Evaluation Framework
-3. Download myfixyuv.c for fixing the distorted video.
-4. Download the testing raw YUV video, i.e. foreman_cif.yuv. 
+1. JSVM installed. (Compiling may fail on new version of gcc, Ver4.1 works fine)
+2. SVEF [[2]] installed.
+3. Replace /src/streamer.c and /src/receiver.c of SVEF by the file of this Repo.
+4. Download myfixyuv.c for fixing the distorted video.
+5. Download the testing raw YUV video, i.e. foreman_cif.yuv [[3]].
+6. Mininet installed.
 
 
   [1]: http://csie.nqu.edu.tw/smallko/sdn/myEvalSVC-Mininet.htm
+  [2]: https://github.com/netgroup/svef
+  [3]: http://dcmc.ee.ncku.edu.tw/~wjh94m/YUVplayer/Foreman_cif.yuv
 
 ## Using this framework
 1. Prepare the network topology with 1 host as a streamer and another host as the client, with mininet connect with both to simulate the network topology.
