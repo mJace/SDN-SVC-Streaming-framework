@@ -22,7 +22,7 @@ The basic work flow of this SDN SVC streaming testing framework is to encoded th
 1. Prepare the network topology with 1 host as a streamer and another host as the client, with mininet connect with both to simulate the network topology.
 2. Prepare the temporal encoding/decoding configuration file.
 
-##### temproal_main.cfg
+##### temporal_main.cfg
 	OutputFile       temporal.264
 	FrameRate      30.0
 	FramesToBeEncoded 300
@@ -45,7 +45,7 @@ The basic work flow of this SDN SVC streaming testing framework is to encoded th
 ### 3. Encoding
 
 ```
-./H264AVCEncoderLibTestStatic -pf temproal_main.cfg > temporal_encoding.txt
+./H264AVCEncoderLibTestStatic -pf temporal_main.cfg > temporal_encoding.txt
 ```
 ![Alt text](/docs/images/image002.jpg)
 
@@ -84,7 +84,7 @@ sudo ./streamer temporal_originaltrace-frameno.txt 30 10.0.0.2 4455 temporal.264
 
 ### 10. Once the streamming finished, let nalufilter discard the late frames and disordered frames.
 ```
-mytools/svef-1.5/nalufilter temporal_originaltrace-feno.txt myreceivedtrace.txt 5000 30 > filteredtrace.txt
+mytools/svef-1.5/nalufilter temporal_originaltrace-frameno.txt myreceivedtrace.txt 5000 30 > filteredtrace.txt
 ```
 ![Alt text](/docs/images/image014.jpg)
 
@@ -98,7 +98,7 @@ Result...
 
 ### 12. Decode the temporal-filtered.264 into yuv file.
 ```
-./H264AVCDecoderLibTestStatic temporal-filtered.264 temoral-filtered.yuv
+./H264AVCDecoderLibTestStatic temporal-filtered.264 temporal-filtered.yuv
 ```
 ![Alt text](/docs/images/image026.jpg)
 
